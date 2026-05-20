@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="m20_with_piper">
+
+  <group name="piper_arm">
+    <chain base_link="arm_base_link" tip_link="arm_gripper_base"/>
+  </group>
+
+  <group name="piper_gripper">
+    <joint name="arm_joint7"/>
+    <joint name="arm_joint8"/>
+  </group>
+
+  <group_state name="home" group="piper_arm">
+    <joint name="arm_joint1" value="0.0"/>
+    <joint name="arm_joint2" value="0.0"/>
+    <joint name="arm_joint3" value="0.0"/>
+    <joint name="arm_joint4" value="0.0"/>
+    <joint name="arm_joint5" value="0.0"/>
+    <joint name="arm_joint6" value="0.0"/>
+  </group_state>
+
+  <group_state name="ready" group="piper_arm">
+    <joint name="arm_joint1" value="0.0"/>
+    <joint name="arm_joint2" value="0.785398"/>
+    <joint name="arm_joint3" value="-0.785398"/>
+    <joint name="arm_joint4" value="0.0"/>
+    <joint name="arm_joint5" value="0.785398"/>
+    <joint name="arm_joint6" value="0.0"/>
+  </group_state>
+
+  <group_state name="stow" group="piper_arm">
+    <joint name="arm_joint1" value="0.0"/>
+    <joint name="arm_joint2" value="1.570796"/>
+    <joint name="arm_joint3" value="-2.094395"/>
+    <joint name="arm_joint4" value="0.0"/>
+    <joint name="arm_joint5" value="0.523599"/>
+    <joint name="arm_joint6" value="0.0"/>
+  </group_state>
+
+  <group_state name="open" group="piper_gripper">
+    <joint name="arm_joint7" value="0.035"/>
+    <joint name="arm_joint8" value="0.035"/>
+  </group_state>
+
+  <group_state name="closed" group="piper_gripper">
+    <joint name="arm_joint7" value="0.0"/>
+    <joint name="arm_joint8" value="0.0"/>
+  </group_state>
+
+  <disable_collisions link1="arm_base_link" link2="arm_link1" reason="Adjacent"/>
+  <disable_collisions link1="arm_link1" link2="arm_link2" reason="Adjacent"/>
+  <disable_collisions link1="arm_link2" link2="arm_link3" reason="Adjacent"/>
+  <disable_collisions link1="arm_link3" link2="arm_link4" reason="Adjacent"/>
+  <disable_collisions link1="arm_link4" link2="arm_link5" reason="Adjacent"/>
+  <disable_collisions link1="arm_link5" link2="arm_link6" reason="Adjacent"/>
+  <disable_collisions link1="arm_link6" link2="arm_gripper_base" reason="Adjacent"/>
+  <disable_collisions link1="arm_gripper_base" link2="arm_link7" reason="Adjacent"/>
+  <disable_collisions link1="arm_gripper_base" link2="arm_link8" reason="Adjacent"/>
+  <disable_collisions link1="arm_link7" link2="arm_link8" reason="Never"/>
+
+</robot>
