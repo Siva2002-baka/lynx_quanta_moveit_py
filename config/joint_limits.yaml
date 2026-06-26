@@ -27,7 +27,7 @@ robot_description_planning:
 
     arm_joint4:
       has_velocity_limits: true
-      max_velocity: 3.9270   # 225 deg/s; range ±106 deg
+      max_velocity: 3.9270   # 225 deg/s; range -100/112 deg
       has_acceleration_limits: true
       max_acceleration: 8.0
 
@@ -39,7 +39,7 @@ robot_description_planning:
 
     arm_joint6:
       has_velocity_limits: true
-      max_velocity: 3.9270   # 225 deg/s; range ±100 deg
+      max_velocity: 3.9270   # 225 deg/s; range ±120 deg
       has_acceleration_limits: true
       max_acceleration: 8.0
 
