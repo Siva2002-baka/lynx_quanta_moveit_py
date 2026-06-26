@@ -24,7 +24,9 @@ from moveit_msgs.msg import (
     JointConstraint,
     RobotState,
     PlanningOptions,
+    WorkspaceParameters,
 )
+from geometry_msgs.msg import Vector3
 from shape_msgs.msg import SolidPrimitive
 
 
@@ -253,11 +255,29 @@ class MoveItPoseController(Node):
             f"xyz=({x:.3f}, {y:.3f}, {z:.3f})"
         )
 
-        # Broad typo guard only.
-        if not (0.02 <= x <= 0.75 and -0.60 <= y <= 0.60 and 0.00 <= z <= 0.80):
+        # Broad typo guard.
+        if not (-0.63 <= x <= 0.63 and -0.63 <= y <= 0.63 and 0.00 <= z <= 0.70):
             self.get_logger().warn(
-                f"Target rejected: clearly outside numeric bounds. "
+                f"Target rejected: outside numeric bounds. "
                 f"xyz=({x:.3f}, {y:.3f}, {z:.3f})"
+            )
+            return
+
+        # 3-D reach guard — J1 axis is at z=0.123 m inside arm_base_link.
+        # Piper X official reach 626 mm measured from J1.
+        J1_Z = 0.123
+        REACH = 0.626
+        reach = math.sqrt(x ** 2 + y ** 2 + (z - J1_Z) ** 2)
+        if reach > REACH:
+            max_x = math.sqrt(max(0.0, REACH ** 2 - y ** 2 - (z - J1_Z) ** 2))
+            max_y = math.sqrt(max(0.0, REACH ** 2 - x ** 2 - (z - J1_Z) ** 2))
+            max_z = J1_Z + math.sqrt(max(0.0, REACH ** 2 - x ** 2 - y ** 2))
+            self.get_logger().warn(
+                f"Target rejected: 3-D reach = {reach * 1000:.0f} mm > 626 mm. "
+                f"xyz=({x:.3f}, {y:.3f}, {z:.3f})\n"
+                f"  With your y={y:.3f} and z={z:.3f} → max |x| = {max_x:.3f} m\n"
+                f"  With your x={x:.3f} and z={z:.3f} → max |y| = {max_y:.3f} m\n"
+                f"  With your x={x:.3f} and y={y:.3f} → max z  = {max_z:.3f} m"
             )
             return
 
@@ -376,6 +396,12 @@ class MoveItPoseController(Node):
         request.max_velocity_scaling_factor = self.velocity_scale
         request.max_acceleration_scaling_factor = self.acceleration_scale
         request.goal_constraints.append(self._make_pose_constraints(pose))
+
+        ws = WorkspaceParameters()
+        ws.header.frame_id = "arm_base_link"
+        ws.min_corner = Vector3(x=-0.65, y=-0.65, z=-0.35)
+        ws.max_corner = Vector3(x=0.65, y=0.65, z=0.75)
+        request.workspace_parameters = ws
 
         goal = MoveGroup.Goal()
         goal.request = request

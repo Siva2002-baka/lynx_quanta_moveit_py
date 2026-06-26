@@ -12,7 +12,7 @@ def generate_launch_description():
             {
                 "use_sim_time": True,
                 "planning_group": "piper_arm",
-                "ik_link_name": "arm_link6",
+                "ik_link_name": "arm_gripper_base",
                 "gripper_duration_s": 4.0,
                 "position_tolerance_m": 0.015,
                 "orientation_tolerance_rad": 3.14,

@@ -44,7 +44,7 @@ def generate_launch_description():
         pkg_lynx,
         "urdf",
         "m20_with_arm",
-        "m20_with_piper.urdf",
+        "m20_with_piper_v3.urdf",
     )
 
     robot_description = {

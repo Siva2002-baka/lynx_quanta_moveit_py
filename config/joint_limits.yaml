@@ -1,52 +1,56 @@
 robot_description_planning:
+  # MoveIt plans at this fraction of max_velocity / max_acceleration.
+  # At 0.15 the effective planning speed is ~15% of hardware max.
+  # Raise to 0.30-0.50 once motions are validated in simulation.
   default_velocity_scaling_factor: 0.15
   default_acceleration_scaling_factor: 0.15
 
   joint_limits:
+    # Official Piper X hardware limits (velocity in rad/s)
     arm_joint1:
       has_velocity_limits: true
-      max_velocity: 1.5
+      max_velocity: 3.1416   # 180 deg/s
       has_acceleration_limits: true
-      max_acceleration: 2.0
+      max_acceleration: 6.0
 
     arm_joint2:
       has_velocity_limits: true
-      max_velocity: 1.5
+      max_velocity: 3.4034   # 195 deg/s
       has_acceleration_limits: true
-      max_acceleration: 2.0
+      max_acceleration: 6.0
 
     arm_joint3:
       has_velocity_limits: true
-      max_velocity: 1.5
+      max_velocity: 3.1416   # 180 deg/s
       has_acceleration_limits: true
-      max_acceleration: 2.0
+      max_acceleration: 6.0
 
     arm_joint4:
       has_velocity_limits: true
-      max_velocity: 1.5
+      max_velocity: 3.9270   # 225 deg/s; range ±106 deg
       has_acceleration_limits: true
-      max_acceleration: 2.0
+      max_acceleration: 8.0
 
     arm_joint5:
       has_velocity_limits: true
-      max_velocity: 1.2
+      max_velocity: 3.9270   # 225 deg/s; range ±75 deg
       has_acceleration_limits: true
-      max_acceleration: 1.5
+      max_acceleration: 8.0
 
     arm_joint6:
       has_velocity_limits: true
-      max_velocity: 1.2
+      max_velocity: 3.9270   # 225 deg/s; range ±100 deg
       has_acceleration_limits: true
-      max_acceleration: 1.5
+      max_acceleration: 8.0
 
     arm_joint7:
       has_velocity_limits: true
-      max_velocity: 0.05
+      max_velocity: 0.5
       has_acceleration_limits: true
-      max_acceleration: 0.10
+      max_acceleration: 1.0
 
     arm_joint8:
       has_velocity_limits: true
-      max_velocity: 0.05
+      max_velocity: 0.5
       has_acceleration_limits: true
-      max_acceleration: 0.10
+      max_acceleration: 1.0
